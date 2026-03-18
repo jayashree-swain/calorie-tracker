@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food History</title>
+    <style>
+        body { font-family: Arial; max-width: 700px; margin: 60px auto; background: #f5f5f5; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h1, h2 { color: #2ecc71; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th { background: #2ecc71; color: white; padding: 10px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f9f9f9; }
+        .totals { display: flex; gap: 16px; margin-top: 10px; }
+        .total-box { flex: 1; background: #f0fdf4; border: 1px solid #2ecc71; border-radius: 8px; padding: 16px; text-align: center; }
+        .total-box h3 { margin: 0; color: #2ecc71; font-size: 24px; }
+        .total-box p { margin: 4px 0 0; color: #666; font-size: 13px; }
+        .btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #2ecc71; color: white; border-radius: 8px; text-decoration: none; }
+        .delete-btn { color: red; text-decoration: none; font-size: 18px; }
+        .delete-btn:hover { color: darkred; }
+        .goal-bar-bg { background: #e0e0e0; border-radius: 8px; height: 20px; margin-top: 10px; }
+        .goal-bar-fill { background: #2ecc71; height: 20px; border-radius: 8px; }
+        .goal-text { font-size: 13px; color: #666; margin-top: 4px; }
+        .chart-img { width: 100%; max-width: 400px; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>📊 Daily Totals</h2>
+        <div class="totals">
+            <div class="total-box">
+                <h3>{{ total_calories }}</h3>
+                <p>Calories (kcal)</p>
+            </div>
+            <div class="total-box">
+                <h3>{{ total_protein }}g</h3>
+                <p>Protein</p>
+            </div>
+            <div class="total-box">
+                <h3>{{ total_carbs }}g</h3>
+                <p>Carbs</p>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <strong>🎯 Daily Goal: 2000 kcal</strong>
+            <div class="goal-bar-bg">
+                <div class="goal-bar-fill" style="width: {{ [[((total_calories / 2000) * 100), 100] | min, 0] | max }}%"></div>
+            </div>
+            <p class="goal-text">{{ total_calories }} / 2000 kcal consumed</p>
+        </div>
+    </div>
+
+    {% if show_chart %}
+    <div class="card">
+        <h2>🥧 Calories by Food</h2>
+        <img src="/static/chart.png" class="chart-img" alt="Calorie Chart">
+    </div>
+    {% endif %}
+
+    <div class="card">
+        <h1>📋 Food History</h1>
+        {% if entries %}
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Food</th>
+                <th>Qty (g)</th>
+                <th>Calories</th>
+                <th>Protein</th>
+                <th>Carbs</th>
+                <th>Delete</th>
+            </tr>
+            {% for entry in entries %}
+            <tr>
+                <td>{{ entry[0] }}</td>
+                <td>{{ entry[1] }}</td>
+                <td>{{ entry[2] }}</td>
+                <td>{{ entry[3] }} kcal</td>
+                <td>{{ entry[4] }}g</td>
+                <td>{{ entry[5] }}g</td>
+                <td><a href="/delete/{{ entry[0] }}" class="delete-btn">🗑️</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No food logged yet! Go add some. 🍽️</p>
+        {% endif %}
+        <a href="/" class="btn">+ Add More Food</a>
+    </div>
+</body>
+</html>

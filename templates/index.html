@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calorie Tracker</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 500px;
+            margin: 60px auto;
+            background: #ffffff;
+        }
+        .card {
+            background:rgb(237, 202, 8);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 { color: #030705; }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #09110c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button:hover { background: #d36a07; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🥗 Calorie Tracker</h1>
+        <p>What did you eat today?</p>
+        <form action="/add" method="POST">
+            <label>Food Name</label>
+            <input type="text" name="food_name" placeholder="e.g. Rice, Banana, Chicken" required />
+
+            <label>Quantity (grams)</label>
+            <input type="number" name="quantity" placeholder="e.g. 150" required />
+
+            <button type="submit">Add Food 🍽️</button>
+        </form>
+    </div>
+</body>
+</html>
